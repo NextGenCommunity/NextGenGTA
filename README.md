@@ -1,2 +1,472 @@
-# NextGenGTA
-NextGen community
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXTGEN | Сборки для GTA San Andreas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            cursor: none;
+        }
+
+        body {
+            background-color: #0a0a2a;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        #stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: twinkle 5s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .cursor-shadow {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transition: transform 0.15s ease;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem 0;
+            background: linear-gradient(to bottom, rgba(10, 10, 42, 0.9), transparent);
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .nextgen-logo {
+            font-size: 4.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 50%, #00d4ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(106, 17, 203, 0.7);
+            letter-spacing: 2px;
+            position: relative;
+            margin-bottom: 0.5rem;
+            animation: glow 3s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 20px rgba(106, 17, 203, 0.7),
+                             0 0 30px rgba(37, 117, 252, 0.5),
+                             0 0 40px rgba(0, 212, 255, 0.3);
+            }
+            100% {
+                text-shadow: 0 0 25px rgba(106, 17, 203, 0.9),
+                             0 0 40px rgba(37, 117, 252, 0.7),
+                             0 0 60px rgba(0, 212, 255, 0.5);
+            }
+        }
+
+        .nextgen-logo::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #6a11cb, #2575fc, #00d4ff, transparent);
+            border-radius: 50%;
+            filter: blur(2px);
+        }
+
+        .community-text {
+            font-size: 1.3rem;
+            color: #a0a0ff;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 300;
+            margin-top: 0.5rem;
+            text-shadow: 0 0 10px rgba(160, 160, 255, 0.5);
+            position: relative;
+            padding: 0.3rem 1rem;
+            background: rgba(16, 16, 48, 0.5);
+            border-radius: 20px;
+            border: 1px solid rgba(106, 17, 203, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #a0a0ff;
+            margin-bottom: 1rem;
+        }
+
+        .game-title {
+            font-size: 1.5rem;
+            color: #ff9900;
+            text-shadow: 0 0 10px rgba(255, 153, 0, 0.5);
+            margin-top: 0.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: rgba(16, 16, 48, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(106, 17, 203, 0.4);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .product-description {
+            color: #a0a0ff;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a4a, #0a0a2a);
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(106, 17, 203, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .modal-text {
+            color: #a0a0ff;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .discord-link {
+            display: inline-block;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .discord-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            color: #a0a0ff;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #fff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            color: #a0a0ff;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .nextgen-logo {
+                font-size: 3.5rem;
+            }
+            
+            .community-text {
+                font-size: 1rem;
+                letter-spacing: 3px;
+            }
+            
+            .game-title {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="stars"></div>
+    <div class="custom-cursor"></div>
+    <div class="cursor-shadow"></div>
+
+    <header>
+        <div class="logo-container">
+            <h1 class="nextgen-logo">NEXTGEN</h1>
+            <div class="community-text">community</div>
+            <div class="game-title">Grand Theft Auto: San Andreas</div>
+        </div>
+        <p class="subtitle">Сборки для улучшения игры GTA San Andreas</p>
+    </header>
+
+    <div class="container">
+        <div class="products-grid">
+            <!-- Product 1 -->
+            <div class="product-card" data-product="Paradise">
+                <img src="https://i.postimg.cc/28q1N5y2/ima231312ge.png" alt="Paradise" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Paradise</h3>
+                    <p class="product-description">Сборка с тропической тематикой, добавляющая яркие цвета и улучшающая визуальную составляющую игры.</p>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card" data-product="Rainbow">
+                <img src="https://i.postimg.cc/BbztPrY5/123123123123123123123.png" alt="Rainbow" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Rainbow</h3>
+                    <p class="product-description">Радужная сборка с насыщенными цветами и эффектами, создающая уникальную атмосферу в игре.</p>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card" data-product="Winter v.1">
+                <img src="https://i.postimg.cc/pXdDhxTv/winter-V-1.jpg" alt="Winter v.1" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Winter v.1</h3>
+                    <p class="product-description">Зимняя тематика с холодными оттенками и снежными эффектами для погружения в атмосферу зимы.</p>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card" data-product="Winter v.2">
+                <img src="https://i.postimg.cc/LXHJcBgD/Winter-V2.png" alt="Winter v.2" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Winter v.2</h3>
+                    <p class="product-description">Улучшенная версия зимней сборки с дополнительными эффектами и оптимизацией производительности.</p>
+                </div>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="product-card" data-product="Strange">
+                <img src="https://i.postimg.cc/KjjRzG5d/Strange-Edition.png" alt="Strange" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Strange</h3>
+                    <p class="product-description">Необычная сборка с психоделическими эффектами и измененной цветовой палитрой для уникального геймплея.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 class="modal-title" id="modalProductTitle">Paradise</h2>
+            <p class="modal-text">Для покупки обращайтесь в Discord: sharpskyyy</p>
+            <a href="#" class="discord-link">Перейти в Discord</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>NEXTGEN Community &copy; 2023. Все права защищены.</p>
+    </footer>
+
+    <script>
+        // Создание звездного фона
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 150;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // Случайные позиции и размеры
+                const size = Math.random() * 3 + 1;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const delay = Math.random() * 5;
+                
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${posX}%`;
+                star.style.top = `${posY}%`;
+                star.style.animationDelay = `${delay}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Кастомный курсор
+        function initCustomCursor() {
+            const cursor = document.querySelector('.custom-cursor');
+            const cursorShadow = document.querySelector('.cursor-shadow');
+            
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+                
+                // Задержка для тени курсора
+                setTimeout(() => {
+                    cursorShadow.style.left = e.clientX + 'px';
+                    cursorShadow.style.top = e.clientY + 'px';
+                }, 100);
+            });
+            
+            // Эффект при наведении на кликабельные элементы
+            const clickableElements = document.querySelectorAll('a, button, .product-card');
+            clickableElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.style.transform = 'scale(1.5)';
+                    cursorShadow.style.transform = 'scale(2)';
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    cursor.style.transform = 'scale(1)';
+                    cursorShadow.style.transform = 'scale(1)';
+                });
+            });
+        }
+
+        // Модальное окно
+        function initModal() {
+            const modal = document.getElementById('productModal');
+            const closeBtn = document.querySelector('.close-modal');
+            const productCards = document.querySelectorAll('.product-card');
+            const modalTitle = document.getElementById('modalProductTitle');
+            
+            // Открытие модального окна при клике на товар
+            productCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const productName = card.getAttribute('data-product');
+                    modalTitle.textContent = productName;
+                    modal.style.display = 'flex';
+                });
+            });
+            
+            // Закрытие модального окна
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+            
+            // Закрытие при клике вне модального окна
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            createStars();
+            initCustomCursor();
+            initModal();
+        });
+    </script>
+</body>
+</html>
